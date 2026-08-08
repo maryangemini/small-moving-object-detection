@@ -4,6 +4,14 @@ Real-time Computer Vision pipeline for detecting and tracking small moving objec
 
 The pipeline combines classical camera motion compensation with a lightweight neural network and object tracking.
 
+## Problem
+
+Detecting very small moving objects from a moving camera is challenging because both the target and the background can move between frames.
+
+The goal of this project is to separate camera-induced motion from independently moving objects while keeping the pipeline lightweight enough for real-time video processing.
+
+The approach combines classical camera motion compensation with neural-network-based motion segmentation and object tracking.
+
 ## Pipeline
 
 ```text
@@ -29,6 +37,21 @@ Bounding boxes
   ↓
 SORT tracking
 ```
+
+## My Contribution
+
+This project was developed as part of a mentored team Computer Vision project.
+
+My work focused on:
+
+- contributing to the real-time motion detection pipeline;
+- camera motion compensation using GFTT features, pyramidal Lucas-Kanade optical flow, forward-backward validation, and RANSAC;
+- processing segmentation masks into candidate bounding boxes;
+- evaluating predictions using IoU, Precision, Recall, and F1-score;
+- investigating issues related to bounding-box scaling, frame alignment, annotation formats, optical-flow parameters, and false positives;
+- profiling and testing the inference pipeline on different hardware backends.
+
+This repository contains a cleaned and documented portfolio version of the experimental project.
 
 ## Technologies
 
@@ -133,6 +156,21 @@ python .\src\inference.py `
   --max-frames 300
 ```
 
+## Evaluation
+
+The detection pipeline was evaluated against annotated video frames.
+
+The main metrics used during development were:
+
+- **IoU (Intersection over Union)** — measures overlap between predicted and ground-truth bounding boxes;
+- **Precision** — measures how many predicted detections are correct;
+- **Recall** — measures how many ground-truth objects are successfully detected;
+- **F1-score** — balances Precision and Recall.
+
+Evaluation should be performed on raw causal predictions rather than on offline-smoothed presentation results.
+
+Exact metric values are not included here because they depend on the evaluation dataset, configuration, and experiment version.
+
 ## Project Structure
 
 ```text
@@ -155,6 +193,17 @@ The real-time inference path produces causal predictions.
 
 Pipelined inference improves throughput by overlapping CPU and GPU work, but it adds approximately one frame of additional pipeline latency.
 
-## Current Status
+## Known Limitations
 
-The project is being reorganized from an experimental Computer Vision prototype into a reproducible portfolio project.
+- Very small targets can be difficult to distinguish from noise and compression artifacts.
+- Camera motion estimation depends on having enough reliable background feature correspondences.
+- Fast or irregular camera motion can reduce stabilization quality.
+- Detection quality is sensitive to segmentation thresholds and bounding-box postprocessing parameters.
+- Bounding-box padding can improve target coverage but may reduce IoU.
+- False positives remain a challenge in scenes containing complex background motion.
+
+## Project Status
+
+The inference pipeline is functional and has been tested end-to-end on Windows with an NVIDIA CUDA GPU.
+
+The repository contains the inference, benchmarking, tracking, and presentation code. Model checkpoints, datasets, and test videos are intentionally excluded from version control.
