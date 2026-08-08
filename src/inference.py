@@ -2599,7 +2599,7 @@ def print_pipelined_report(report: dict) -> None:
 # ================================================================
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Inference TinyUNet motion detection (ARM Mac ready).")
+    parser = argparse.ArgumentParser(description="TinyUNet inference for small moving object detection.")
     parser.add_argument("--video", required=True, help="Шлях до вхідного відео.")
     parser.add_argument("--checkpoint", default=None, help="Шлях до .pth checkpoint TinyUNet.")
     parser.add_argument("--coreml", default=None, help="Шлях до .mlpackage — вмикає Core ML бекенд.")
@@ -2612,7 +2612,7 @@ def main() -> None:
     parser.add_argument("--max-frames", type=int, default=None, help="Обмежити кількість кадрів.")
 
     parser.add_argument("--pipelined", action="store_true",
-                        help="Конвеєрний inference у два потоки (продакшн-режим для Mac).")
+                        help="Two-thread pipelined inference for higher throughput.")
     parser.add_argument("--queue-size", type=int, default=PIPELINE_QUEUE_SIZE)
     parser.add_argument("--opencv-threads", type=int, default=OPENCV_THREADS,
                         help="Потоки OpenCV: 1 — рекомендовано для конвеєра, 0 — на розсуд бібліотеки.")
