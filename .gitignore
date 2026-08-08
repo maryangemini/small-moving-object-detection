@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.mypy_cache/
+
+# Virtual environment
+.venv/
+venv/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Generated output
+outputs/
+results/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+Desktop.ini
